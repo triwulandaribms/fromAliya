@@ -29,6 +29,13 @@ app.get("/api/tampil", async (req, res) => {
   res.send("berhasil");
 });
 
+const text = [];
+
+app.post("/api/tambah", async (req, res) => {
+  await writeFile("./data/data.txt", req.body.text, "UTF8");
+  res.send(`berhasil menambah ${text}`);
+});
+
 app.listen(3000);
 
 console.log("server berjalan di http://localhost:3000");
