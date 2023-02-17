@@ -1,5 +1,6 @@
 // import http from "node:http";
 import express from "express";
+import { readFile } from "node:fs";
 import { writeFile } from "node:fs/promises";
 import { rename } from "node:fs/promises";
 import { mkdir } from "node:fs/promises";
@@ -24,6 +25,11 @@ app.get("/api/ubah", async () => {
   await rename("./data.txt", "./data");
 });
 
+app.get("/api/lihat", async (req, res) => {
+  const data = await readFile("./data/data.txt", "UTF8");
+  res.send(data);
+});
+
 app.get("/api/tampil", async (req, res) => {
   await writeFile("./data/data.txt", "Tri wulandari", "UTF8");
   res.send("berhasil");
@@ -35,6 +41,10 @@ app.post("/api/tambah", async (req, res) => {
   await writeFile("./data/data.txt", req.body.text, "UTF8");
   res.send(`berhasil menambah ${text}`);
 });
+
+// app.post("/api/tambaha", async (req, res) => {
+//   text.push(req.body.data);
+// });
 
 app.listen(3000);
 
